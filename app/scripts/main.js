@@ -1,65 +1,64 @@
 /*jslint browser: true*/
 /*global L */
-
-
-function loadMap() {
-	var map, stanfordMlk, apostle, princetonMap, iiifLayers;
-
-	map = L.map('map', {
-	  center: [0, 0],
-	  crs: L.CRS.Simple,
-	  zoom: 0
-	});
-
-	stanfordMlk = L.tileLayer.iiif('https://stacks.stanford.edu/image/iiif/hg676jb4964%2F0380_796-44/info.json', {
-	  attribution: '<a href="http://searchworks.stanford.edu/view/hg676jb4964">Martin Luther King Jr. & Joan Baez march to integrate schools, Grenada, MS, 1966</a>'
-	}).addTo(map);
-
-	princetonMap = L.tileLayer.iiif('http://libimages.princeton.edu/loris2/pudl0076%2Fmap_pownall%2F00000001.jp2/info.json', {
-	  attribution: '<a href="http://arks.princeton.edu/ark:/88435/02870w62c">The provinces of New York and New Jersey, with part of Pensilvania, and the Province of Quebec : drawn by Major Holland, Surveyor General, of the Northern District in America. Corrected and improved, from the original materials, by Governr. Pownall, Member of Parliament, 1776</a>'
-	});
-
-	apostle = L.tileLayer.iiif('http://ids.lib.harvard.edu/ids/iiif/25286610/info.json', {
-	  attribution: '<a href="http://via.lib.harvard.edu/via/deliver/deepcontentItem?recordId=olvwork576793%2CVIT.BB%3A4906794">Apostle: Anonymous sculptor of Florence, 15th century (1401-1500)</a>'
-	});
-
-	iiifLayers = {
-	  'Martin Luther King Jr. & Joan Baez ...': stanfordMlk,
-	  'The provinces of New York and N...': princetonMap,
-	  'Apostle: Anonymous sculptor of Fl...': apostle
-	};
-
-	// L.control.sidebar('sidebar').addTo(map);
-	// L.control.layers(iiifLayers).addTo(map);
-}
-
-function testCB(id) {
-	alert('this iamge has id:' + id);
-}
-
-function showInfo(id) {
-	console.log('this is info: ' + id)
-}
-
-function initRouter() {
-
-	var routes = {
-        '/:id': testCB,
-        '/:id/info': showInfo
-      };
-
-      var router = Router(routes);
-      router.init();
-}
-
-initRouter();
-
 (function (window, document, L, undefined) {
-	'use strict';
+  'use strict';
 
+  // define constants
+  var IIIF_SERVER = 'http://libimages.princeton.edu/loris2/',
+    IIIF_BASE = 'pulmap',
+    IMAGE_NAME = '00000001.jp2';
+    
+  // current image and layer
+  var imageId,
+    iiifLayer;
 
-	loadMap();
+  // create leaflet-iiif map
+  var map = L.map('map', {
+    center: [0, 0],
+    crs: L.CRS.Simple,
+    zoom: 0
+  });
+  function getIIIFurl(id) {
 
+    // create iiif image id from pairtree id
+    // escape forward slashes
+    var imageId = (pairtree.path(id) + IMAGE_NAME).replace(/\//g,'%2F');
+
+    // return iiif url
+    return IIIF_SERVER + IIIF_BASE + imageId + '/info.json';
+  }
+  function addImageToMap(id) {
+
+    // get iiif url from id
+    var iiifUrl = getIIIFurl(id);
+
+    // if exisiting layer, remove it from map
+    if (iiifLayer) {
+      map.removeLayer(iiifLayer);
+    }
+
+    // create iiif tile layaer and add to map
+    iiifLayer = L.tileLayer.iiif(iiifUrl, {}).addTo(map);
+  }
+  function loadImage(id) {
+
+    // load image if not already
+    if (imageId !== id) {
+      imageId = id;
+      addImageToMap(id);
+    }
+  }
+  function initRouter() {
+
+    // define client-side routes
+    var routes = {
+      '/:id': loadImage
+     };
+
+     var router = Router(routes);
+     router.init();
+  }
+
+  // initialize routing
+  initRouter();
 }(window, document, L));
-
-
