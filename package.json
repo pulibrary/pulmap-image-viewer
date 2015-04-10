@@ -1,6 +1,6 @@
 {
   "name": "pulmap-viewer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "devDependencies": {
     "gulp": "^3.6.2",
     "gulp-autoprefixer": "0.0.7",
@@ -19,6 +19,12 @@
   },
   "dependencies": {
     "pairtree": "~0.0.1",
-  	"leaflet": "~0.7.3"
-  }
+    "leaflet": "~0.7.3"
+  },
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
