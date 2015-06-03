@@ -39,6 +39,16 @@
 
     // create iiif tile layaer and add to map
     iiifLayer = L.tileLayer.iiif(iiifUrl, {}).addTo(map);
+
+    var sidebar = L.control.sidebar('sidebar', {
+            closeButton: false,
+            position: 'right'
+        });
+        map.addControl(sidebar);
+
+        setTimeout(function () {
+            // sidebar.show();
+        }, 500);
   }
   function loadImage(id) {
 
