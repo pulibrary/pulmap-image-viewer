@@ -10,18 +10,88 @@
 	display: table;
 	clear: both;
 }
-body,
-html {
-	font-family: Arial, sans-serif;
+
+body {
 	height: 100%;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	color: #333333;
+	background-color: white;
+}
+html {
+	height: 100%;
+}
+h2 {
+	font-size: 30px;
+	font-weight: 500;
+	display: none;
+}
+
+dl {
+	line-height: 1.428571429;
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
+dt {
+	float: left;
+	/*width: 100px;*/
+	width: 100%;
+	clear: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: bold;
+	line-height: 1.428571429;
+	display: none;
+}
+
+dd {
+	margin-bottom: 6px;
+	margin-left: 0px;
+	display: none;
 }
 .map {
 	width: 100%;
 	height: 100%;
+	background-color: #FFF;
 }
 
 .map-application {
 	height: 100%;
-	
+	float:left;
+	width:70%;
 }
 
+.contact {
+	display: none;
+
+}
+
+.contact-item {
+	padding-top: 20px;
+}
+
+.contact-header {
+	text-decoration: underline;
+	margin-bottom: 3px;
+}
+
+.clear { clear: both;}
+.leftcolumn { width: 200px; float: left}
+.rightcolumn { width: 200px; float: right}
+
+
+#item-text {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+#item-info {
+	float:right;
+	width:30%;
+}
+
+#item-title {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
