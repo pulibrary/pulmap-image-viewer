@@ -1,6 +1,6 @@
 {
   "name": "pulmap-viewer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "devDependencies": {
     "gulp": "^3.6.2",
     "gulp-autoprefixer": "0.0.7",

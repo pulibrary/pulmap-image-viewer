@@ -1,11 +1,9 @@
 {
   "name": "pulmap-viewer",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "dependencies": {
   	
   	"director": "~1.2.7",
-  	"leaflet-sidebar": "~0.1.6",
-  	"font-awesome-bower": "~4.3.0",
   	"leaflet-iiif": "~0.0.5",
   	"jquery": "~2.1.0"	
   }
