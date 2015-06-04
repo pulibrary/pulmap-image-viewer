@@ -7,7 +7,7 @@
   var IIIF_SERVER = 'https://geowebservices.princeton.edu/iiif/',
     IIIF_BASE = 'pulmap',
     IMAGE_NAME = '00000001.jp2',
-    METADATA_SERVICE = 'http://geowebservices.princeton.edu/metadata/edu.princeton.arks/';
+    METADATA_SERVICE = 'https://geowebservices.princeton.edu/metadata/edu.princeton.arks/';
     
   // current image and layer
   var imageId,
@@ -21,8 +21,9 @@
   });
   function getIIIFurl(id) {
 
-    // create iiif image id from pairtree id
-    // escape forward slashes
+    /* create iiif image id from pairtree id
+     * escape forward slashes 
+     */
     var imageId = (pairtree.path(id) + IMAGE_NAME).replace(/\//g,'%2F');
 
     // return iiif url
@@ -43,21 +44,24 @@
   }
   function populateTemplate(text, templateName) {
       if (Array.isArray(text)) {
+
         //Add comma-separated items
         var i;
         var items = text[0];
         for (i=1 ;i<text.length;i++) {
-            items=items + ", " + text[i];
+            items=items + ', ' + text[i];
         }
         text = items;
       } 
       if (text) {
-        document.getElementById("item-" + templateName).innerHTML = text;
-        document.getElementById("item-" + templateName).style.visibility= 'visible';
-        document.getElementById("item-" + templateName + "-label").style.visibility= 'visible';
+        document.getElementById('item-' + templateName).innerHTML = text;
+        document.getElementById('item-' + templateName).style.display= 'block';
+        document.getElementById('item-' + templateName + '-label').style.display= 'block';
       }
   }
   function parseMetadata(data) {
+
+    // populate metadata info
     populateTemplate(data.dc_title_s, 'title');
     populateTemplate(data.dc_creator_sm, 'author');
     populateTemplate(data.dc_description_s, 'abstract');
@@ -65,6 +69,10 @@
     populateTemplate(data.dc_subject_sm, 'subjects');
     populateTemplate(data.dct_spatial_sm, 'places');
     populateTemplate(data.solr_year_i, 'year');
+
+    // make conact visible
+    document.getElementById('item-contact-label').style.display= 'block';
+    document.getElementById('item-contact').style.display= 'block';
   }
   function loadMetadata(id) {
     var metadataUrl = METADATA_SERVICE + id + '/geoblacklight.json';
@@ -80,6 +88,9 @@
       imageId = id;
       addImageToMap(id);
       loadMetadata(id);
+
+      // place focus on map for keyboard control
+      document.getElementById('map').focus();
     }
   }
   function initRouter() {
@@ -88,7 +99,6 @@
     var routes = {
       '/:id': loadImage
      };
-
      var router = Router(routes);
      router.init();
   }
