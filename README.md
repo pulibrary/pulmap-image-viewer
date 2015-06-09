@@ -1,4 +1,4 @@
-# pulmap-viewer
+# Pulmap Image Viewer
 Simple viewer for Princeton maps
 
 
