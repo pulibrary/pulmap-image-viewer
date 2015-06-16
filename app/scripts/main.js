@@ -4,7 +4,7 @@
   'use strict';
 
   // define constants
-  var IIIF_SERVER = 'http://libimages.princeton.edu/loris/';
+  var IIIF_SERVER = 'https://geowebservices.princeton.edu/iiif/';
   var IIIF_BASE = 'pulmap';
   var IMAGE_NAME = '00000001.jp2';
   var METADATA_SERVICE = 'https://geowebservices.princeton.edu/metadata/edu.princeton.arks/';
