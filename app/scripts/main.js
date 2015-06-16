@@ -4,21 +4,15 @@
   'use strict';
 
   // define constants
-  var IIIF_SERVER = 'https://geowebservices.princeton.edu/iiif/',
-    IIIF_BASE = 'pulmap',
-    IMAGE_NAME = '00000001.jp2',
-    METADATA_SERVICE = 'https://geowebservices.princeton.edu/metadata/edu.princeton.arks/';
-    
-  // current image and layer
-  var imageId,
-    iiifLayer;
+  var IIIF_SERVER = 'http://libimages.princeton.edu/loris/';
+  var IIIF_BASE = 'pulmap';
+  var IMAGE_NAME = '00000001.jp2';
+  var METADATA_SERVICE = 'https://geowebservices.princeton.edu/metadata/edu.princeton.arks/';
 
-  // create leaflet-iiif map
-  var map = L.map('map', {
-    center: [0, 0],
-    crs: L.CRS.Simple,
-    zoom: 0
-  });
+  // current image and layer
+  var imageId;
+  var SEADRAGON = null;
+
   function getIIIFurl(id) {
 
     /* create iiif image id from pairtree id
@@ -30,17 +24,28 @@
     return IIIF_SERVER + IIIF_BASE + imageId + '/info.json';
   }
   function addImageToMap(id) {
-
     // get iiif url from id
     var iiifUrl = getIIIFurl(id);
 
-    // if exisiting layer, remove it from map
-    if (iiifLayer) {
-      map.removeLayer(iiifLayer);
+    // If it exists, destory old viewer
+    if (SEADRAGON) {
+      SEADRAGON.destroy();
     }
 
-    // create iiif tile layaer and add to map
-    iiifLayer = L.tileLayer.iiif(iiifUrl, {}).addTo(map);
+    // create osd iiif options
+    var osdConfig = {
+      id: 'map',
+      prefixUrl: 'images/osd/',
+      debugMode: false,
+      preserveViewport: true,
+      visibilityRatio: 1,
+      minZoomLevel: 1,
+      tileSources: [iiifUrl]
+    };
+
+    // open seadragon
+    SEADRAGON = OpenSeadragon(osdConfig);
+
   }
   function populateTemplate(text, templateName) {
       if (Array.isArray(text)) {
