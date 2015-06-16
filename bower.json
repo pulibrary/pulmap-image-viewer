@@ -2,10 +2,8 @@
   "name": "pulmap-viewer",
   "version": "0.0.2",
   "dependencies": {
-  	
-  	"director": "~1.2.7",
-  	"leaflet-iiif": "~0.0.5",
-  	"jquery": "~2.1.0"	
+    "director": "~1.2.7",
+    "jquery": "~2.1.0",
+    "openseadragon": "~2.0.0"
   }
 }
-
